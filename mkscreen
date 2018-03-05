@@ -1,0 +1,48 @@
+#!/bin/bash
+
+VERSION=0.1.0
+
+cpath="$HOME/.config/screen/"
+
+while getopts ":l" opt; do
+    case $opt in
+        l)
+            echo "Available configurations ($cpath):"
+            ls -Bm $cpath
+            exit 0
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG" >&2
+            exit 1
+        ;;
+    esac
+done
+
+# Set config to "default" if no value was given.
+config=${1:-'default'}
+sessionname=${2:-"$config"}
+cfile=${cpath}${config}
+
+# If the config doesn't exist, set cpath to look for a "default" config.
+if [ ! -f "$cfile" ] && [ "$config" != "default" ]; then
+    echo "No such file '$config' .. will try 'default'" 1>&2
+    cfile="${cpath}default"
+fi
+
+exit;
+
+if [ -f "$cfile" ]; then
+    # Don't give a "default" screen session a session name via opt (-S).
+    if [ "$sessionname" = 'default' ]; then
+        screen -U -c "$cfile"
+    else
+        screen -U -c "$cfile" -S "$sessionname"
+    fi
+else
+    # We couldn't find a corresponding config file, so use the arg as the
+    # session name and give the user their standard session.
+    echo "No such file '$config' .. will use as session name with screenrc" 1>&2
+    screen -U -S "$session"
+fi
+
+exit 0

@@ -1,0 +1,22 @@
+.\" Manpage for mkscreen
+.\" Contact thomas@em7b5.net to correct errors or typos.
+.TH man 8 "27 October 2016" "0.1.0" "mkscreen man page"
+.SH NAME
+mkscreen \- create a new screen session from a configuration file
+.SH SYNOPSIS
+mkscreen \fIconfig\fP
+.SH DESCRIPTION
+.I mkscreen
+is a simple alias to "screen \-U \-c \fIfile\fP \-S \fIsessionname\fP" with
+tab completion. Just stash your configs in ~/.config/screen/ and you're ready
+to go.
+.SH OPTIONS
+.TP 5
+.B \-l
+list all available configurations
+.SH SEE ALSO
+screen(1)
+.SH BUGS
+No known bugs.
+.SH AUTHOR
+thosbot (thomas@em7b5.net)
